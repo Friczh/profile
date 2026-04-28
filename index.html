@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Your Name — Developer & Designer" />
+  <title>Your Name</title>
+
+  <!-- ─── Preconnects ────────────────────────────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- ─── Material Symbols Rounded (variable font, filled) ─────── -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <!-- ─── Google Fonts ─────────────────────────────────────────── -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- ─── Material Web Components (MD3) ───────────────────────── -->
+  <script type="module" src="https://esm.sh/@material/web@2.2.0/all.js"></script>
+
+  <!-- ─── MD3 Typescale Styles ─────────────────────────────────── -->
+  <script type="module">
+    import { styles as typescaleStyles }
+      from 'https://esm.sh/@material/web@2.2.0/typography/md-typescale-styles.js';
+    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+  </script>
+
+  <!-- ─── Theme Tokens (Emerald Light / Light-Blue Dark) ───────── -->
+  <link rel="stylesheet" href="css/theme.css" />
+
+  <!-- ─── Layout & Component Styles ───────────────────────────── -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!--  NAVIGATION DRAWER                                          -->
+  <!--  • Desktop  → slides in from the LEFT (standard)           -->
+  <!--  • Mobile   → drops DOWN from beneath the top bar (sheet)  -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+
+  <!-- Scrim — shown behind modal drawer on mobile/tablet -->
+  <div class="nav-scrim" id="nav-scrim" aria-hidden="true"></div>
+
+  <nav class="nav-drawer" id="nav-drawer"
+       role="navigation" aria-label="Site navigation" aria-hidden="true">
+
+    <!-- Drawer header (desktop only) -->
+    <div class="drawer-header">
+      <span class="drawer-logo material-symbols-rounded" aria-hidden="true">deployed_code</span>
+      <span class="drawer-title md-typescale-title-large">Menu</span>
+      <md-icon-button class="drawer-close-btn" id="drawer-close-btn"
+                      aria-label="Close navigation">
+        <md-icon>close</md-icon>
+      </md-icon-button>
+    </div>
+
+    <md-divider></md-divider>
+
+    <!-- Nav items -->
+    <ul class="nav-list" role="list">
+
+      <li>
+        <button class="nav-item" data-target="projects"
+                aria-label="Navigate to Projects">
+          <span class="nav-item-icon material-symbols-rounded" aria-hidden="true">folder_open</span>
+          <span class="nav-item-label md-typescale-label-large">Projects</span>
+          <md-ripple></md-ripple>
+        </button>
+      </li>
+
+      <li>
+        <button class="nav-item" data-target="about"
+                aria-label="Navigate to About">
+          <span class="nav-item-icon material-symbols-rounded" aria-hidden="true">person</span>
+          <span class="nav-item-label md-typescale-label-large">About</span>
+          <md-ripple></md-ripple>
+        </button>
+      </li>
+
+      <li>
+        <button class="nav-item" data-target="contact"
+                aria-label="Navigate to Contact">
+          <span class="nav-item-icon material-symbols-rounded" aria-hidden="true">mail</span>
+          <span class="nav-item-label md-typescale-label-large">Contact</span>
+          <md-ripple></md-ripple>
+        </button>
+      </li>
+
+    </ul>
+
+    <!-- Drawer footer -->
+    <div class="drawer-footer">
+      <span class="md-typescale-body-small drawer-footer-text">Built with MD3 ✦</span>
+    </div>
+
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!--  TOP APP BAR                                                -->
+  <!--  Leading  : [Expand/Menu button]                           -->
+  <!--  Headline : Site title / your name                         -->
+  <!--  Trailing : [Projects tab] [Theme toggle]                  -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <header class="top-app-bar" id="top-app-bar">
+
+    <!-- Leading: Hamburger / expand -->
+    <div class="app-bar-leading">
+      <md-icon-button id="menu-btn"
+                      aria-label="Open navigation"
+                      aria-expanded="false"
+                      aria-controls="nav-drawer">
+        <md-icon id="menu-icon">menu</md-icon>
+      </md-icon-button>
+    </div>
+
+    <!-- Headline -->
+    <a class="app-bar-title md-typescale-title-large"
+       href="#hero" aria-label="Go to top">
+      Your Name
+    </a>
+
+    <!-- Trailing: Projects shortcut + theme toggle -->
+    <div class="app-bar-trailing">
+
+      <!-- Projects tab (visible in top bar — quick link) -->
+      <button class="appbar-tab" id="appbar-projects-tab"
+              data-target="projects" aria-label="Projects">
+        <span class="appbar-tab-icon material-symbols-rounded" aria-hidden="true">folder_open</span>
+        <span class="appbar-tab-label md-typescale-label-large">Projects</span>
+        <md-ripple></md-ripple>
+      </button>
+
+      <!-- Theme toggle -->
+      <md-icon-button id="theme-btn"
+                      aria-label="Switch theme"
+                      title="Switch theme">
+        <!--
+          Light theme  → shows light_mode icon (click to go dark)
+          Dark  theme  → shows dark_mode  icon (click to go light)
+        -->
+        <md-icon id="theme-icon">light_mode</md-icon>
+      </md-icon-button>
+
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!--  PAGE WRAPPER  (shifts right on desktop when drawer opens) -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <div class="page-wrapper" id="page-wrapper">
+
+    <!-- ══════════ MAIN CONTENT ══════════════════════════════════ -->
+    <main id="main-content">
+
+      <!-- ─── HERO ──────────────────────────────────────────── -->
+      <section class="section section--hero" id="hero" aria-labelledby="hero-heading">
+
+        <div class="hero-inner">
+
+          <!-- Avatar -->
+          <div class="hero-avatar-wrap" aria-hidden="true">
+            <img class="hero-avatar"
+                 src="assets/avatar.jpg"
+                 alt="Profile photo of Your Name"
+                 id="hero-avatar-img"
+                 onerror="this.hidden=true;document.getElementById('avatar-fallback').hidden=false;" />
+            <div class="hero-avatar hero-avatar--fallback" id="avatar-fallback" hidden>
+              <span class="material-symbols-rounded">person</span>
+            </div>
+            <!-- MD3 state layer ring -->
+            <div class="avatar-ring" aria-hidden="true"></div>
+          </div>
+
+          <!-- Hero text -->
+          <div class="hero-text">
+            <h1 class="md-typescale-display-small hero-name" id="hero-heading">
+              Your Name
+            </h1>
+            <p class="md-typescale-headline-small hero-role" id="hero-role">
+              <!-- Filled by content.js -->
+            </p>
+            <p class="md-typescale-body-large hero-bio" id="hero-bio">
+              <!-- Filled by content.js -->
+            </p>
+
+            <!-- CTA buttons -->
+            <div class="hero-actions">
+              <md-filled-button id="hero-cta-projects" data-target="projects">
+                <md-icon slot="icon">folder_open</md-icon>
+                View Projects
+              </md-filled-button>
+
+              <md-outlined-button id="hero-cta-contact" data-target="contact">
+                <md-icon slot="icon">mail_outline</md-icon>
+                Contact Me
+              </md-outlined-button>
+            </div>
+
+            <!-- Social icon links -->
+            <div class="hero-socials" id="hero-socials">
+              <!-- Filled by content.js -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Scroll hint -->
+        <div class="scroll-hint" aria-hidden="true">
+          <span class="material-symbols-rounded scroll-hint-icon">expand_more</span>
+        </div>
+
+      </section>
+
+      <!-- ─── PROJECTS ──────────────────────────────────────── -->
+      <section class="section section--projects" id="projects" aria-labelledby="projects-heading">
+        <div class="section-inner">
+
+          <div class="section-header">
+            <h2 class="md-typescale-headline-medium section-title" id="projects-heading">
+              Featured Projects
+            </h2>
+            <p class="md-typescale-body-large section-subtitle">
+              Things I've built and shipped
+            </p>
+          </div>
+
+          <!--
+            Project cards are injected here by js/content.js
+            Each card structure:
+              <article class="project-card">
+                <div class="card-media">  …icon or image… </div>
+                <div class="card-content">
+                  <h3 class="md-typescale-title-medium">Name</h3>
+                  <p  class="md-typescale-body-medium">Desc</p>
+                  <div class="card-chips"> …md-assist-chip… </div>
+                </div>
+                <div class="card-actions">
+                  <md-text-button href="…">GitHub</md-text-button>
+                  <md-filled-tonal-button href="…">Live</md-filled-tonal-button>
+                </div>
+              </article>
+          -->
+          <div class="projects-grid" id="projects-grid" role="list">
+            <!-- Injected by content.js -->
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ─── ABOUT ─────────────────────────────────────────── -->
+      <section class="section section--about" id="about" aria-labelledby="about-heading">
+        <div class="section-inner">
+
+          <div class="section-header">
+            <h2 class="md-typescale-headline-medium section-title" id="about-heading">
+              About Me
+            </h2>
+          </div>
+
+          <div class="about-layout">
+
+            <!-- Bio text — filled by content.js -->
+            <div class="about-text" id="about-text">
+              <!-- Injected by content.js -->
+            </div>
+
+            <!-- Skills block -->
+            <div class="skills-block">
+              <h3 class="md-typescale-title-medium skills-heading">
+                Skills &amp; Tools
+              </h3>
+              <!--
+                Chips are injected by content.js as:
+                  <md-assist-chip label="React"></md-assist-chip>
+              -->
+              <div class="skills-chips" id="skills-chips" role="list">
+                <!-- Injected by content.js -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ─── CONTACT ───────────────────────────────────────── -->
+      <section class="section section--contact" id="contact" aria-labelledby="contact-heading">
+        <div class="section-inner">
+
+          <div class="section-header">
+            <h2 class="md-typescale-headline-medium section-title" id="contact-heading">
+              Get In Touch
+            </h2>
+            <p class="md-typescale-body-large section-subtitle">
+              Let's build something great together
+            </p>
+          </div>
+
+          <!--
+            Contact cards are injected by content.js
+          -->
+          <div class="contact-grid" id="contact-grid">
+            <!-- Injected by content.js -->
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ══════════ FOOTER ════════════════════════════════════════ -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span class="md-typescale-body-small footer-copy" id="footer-copy">
+          <!-- Injected by content.js -->
+        </span>
+        <div class="footer-links" id="footer-links">
+          <!-- Injected by content.js -->
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /.page-wrapper -->
+
+  <!-- ─── Progress indicator (page loading) ────────────────────── -->
+  <md-linear-progress id="page-loader"
+                      indeterminate
+                      aria-label="Loading page"
+                      style="position:fixed;top:0;left:0;right:0;z-index:9999;">
+  </md-linear-progress>
+
+  <!-- ─── Back-to-top FAB ───────────────────────────────────────── -->
+  <md-fab class="back-to-top-fab" id="back-to-top-fab"
+          aria-label="Back to top"
+          size="small"
+          style="display:none;">
+    <md-icon slot="icon">keyboard_arrow_up</md-icon>
+  </md-fab>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!--  SCRIPTS  (deferred, after DOM)                            -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <script src="js/main.js"    defer></script>
+  <script src="js/content.js" defer></script>
+
+</body>
+</html>
