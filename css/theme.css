@@ -1,0 +1,220 @@
+/* ================================================================
+   theme.css — Material Design 3 Color Tokens
+   Two themes:
+     [data-theme="light"]  →  Emerald  (light surface, green primary)
+     [data-theme="dark"]   →  Light Blue (dark surface, sky primary)
+   ================================================================ */
+
+/* ── Shared: font stack ────────────────────────────────────────── */
+:root {
+  --md-ref-typeface-brand:  'Google Sans Display', 'Google Sans', sans-serif;
+  --md-ref-typeface-plain:  'Google Sans', sans-serif;
+
+  /* Material Symbols variable font settings */
+  --icon-fill:   1;
+  --icon-wght:   400;
+  --icon-grad:   0;
+  --icon-opsz:   24;
+
+  /* Drawer width (desktop) */
+  --drawer-width: 280px;
+
+  /* Top bar height */
+  --appbar-height: 64px;
+
+  /* Transition speed */
+  --motion-duration-medium2: 300ms;
+  --motion-duration-short4:  200ms;
+  --motion-easing-standard:  cubic-bezier(0.2, 0, 0, 1);
+  --motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ================================================================
+   LIGHT THEME — Emerald
+   ================================================================ */
+[data-theme="light"] {
+
+  /* ── Primary ── */
+  --md-sys-color-primary:                 #1b6b45;
+  --md-sys-color-on-primary:              #ffffff;
+  --md-sys-color-primary-container:       #a8f5c4;
+  --md-sys-color-on-primary-container:    #002113;
+
+  /* ── Secondary ── */
+  --md-sys-color-secondary:               #4e6b59;
+  --md-sys-color-on-secondary:            #ffffff;
+  --md-sys-color-secondary-container:     #d1f0da;
+  --md-sys-color-on-secondary-container:  #0c2117;
+
+  /* ── Tertiary ── */
+  --md-sys-color-tertiary:                #3a6473;
+  --md-sys-color-on-tertiary:             #ffffff;
+  --md-sys-color-tertiary-container:      #bee9fb;
+  --md-sys-color-on-tertiary-container:   #001f28;
+
+  /* ── Error ── */
+  --md-sys-color-error:                   #ba1a1a;
+  --md-sys-color-on-error:                #ffffff;
+  --md-sys-color-error-container:         #ffdad6;
+  --md-sys-color-on-error-container:      #410002;
+
+  /* ── Background / Surface ── */
+  --md-sys-color-background:              #f4fbf5;
+  --md-sys-color-on-background:           #161d18;
+  --md-sys-color-surface:                 #f4fbf5;
+  --md-sys-color-on-surface:              #161d18;
+  --md-sys-color-surface-variant:         #d4e8da;
+  --md-sys-color-on-surface-variant:      #3d4f44;
+
+  /* ── Surface containers ── */
+  --md-sys-color-surface-dim:             #d5dbd6;
+  --md-sys-color-surface-bright:          #f4fbf5;
+  --md-sys-color-surface-container-lowest:#ffffff;
+  --md-sys-color-surface-container-low:   #eef5ef;
+  --md-sys-color-surface-container:       #e8efea;
+  --md-sys-color-surface-container-high:  #e2eae3;
+  --md-sys-color-surface-container-highest:#dce4de;
+
+  /* ── Outline ── */
+  --md-sys-color-outline:                 #6d7f72;
+  --md-sys-color-outline-variant:         #b8ccbe;
+
+  /* ── Shadow / Scrim ── */
+  --md-sys-color-shadow:                  #000000;
+  --md-sys-color-scrim:                   #000000;
+
+  /* ── Inverse ── */
+  --md-sys-color-inverse-surface:         #2b3229;
+  --md-sys-color-inverse-on-surface:      #ebf2ec;
+  --md-sys-color-inverse-primary:         #8cd8a9;
+
+  /* ── Custom accent helpers ── */
+  --color-hero-gradient-start:            #e8f5ed;
+  --color-hero-gradient-end:              #f4fbf5;
+  --color-card-hover-tint:                rgba(27, 107, 69, 0.08);
+  --color-section-alt:                    #eef5ef;
+
+  /* ── Elevation overlays (MD3 tonal surface) ── */
+  --elevation-tint: rgba(27, 107, 69, 1);
+  --elevation-1: 0 1px 2px rgba(0,0,0,.12), 0 1px 3px 1px rgba(0,0,0,.08);
+  --elevation-2: 0 1px 2px rgba(0,0,0,.12), 0 2px 6px 2px rgba(0,0,0,.10);
+  --elevation-3: 0 4px 8px 3px rgba(0,0,0,.10), 0 1px 3px rgba(0,0,0,.12);
+}
+
+/* ================================================================
+   DARK THEME — Light Blue
+   ================================================================ */
+[data-theme="dark"] {
+
+  /* ── Primary ── */
+  --md-sys-color-primary:                 #50c8ff;
+  --md-sys-color-on-primary:              #00344a;
+  --md-sys-color-primary-container:       #004d6b;
+  --md-sys-color-on-primary-container:    #c2e8ff;
+
+  /* ── Secondary ── */
+  --md-sys-color-secondary:               #aecde0;
+  --md-sys-color-on-secondary:            #143546;
+  --md-sys-color-secondary-container:     #2c4c5e;
+  --md-sys-color-on-secondary-container:  #cae9fc;
+
+  /* ── Tertiary ── */
+  --md-sys-color-tertiary:                #bfc4ff;
+  --md-sys-color-on-tertiary:             #232562;
+  --md-sys-color-tertiary-container:      #3a3d7a;
+  --md-sys-color-on-tertiary-container:   #dfe0ff;
+
+  /* ── Error ── */
+  --md-sys-color-error:                   #ffb4ab;
+  --md-sys-color-on-error:                #690005;
+  --md-sys-color-error-container:         #93000a;
+  --md-sys-color-on-error-container:      #ffdad6;
+
+  /* ── Background / Surface ── */
+  --md-sys-color-background:              #0b1318;
+  --md-sys-color-on-background:           #dde4ea;
+  --md-sys-color-surface:                 #0b1318;
+  --md-sys-color-on-surface:              #dde4ea;
+  --md-sys-color-surface-variant:         #374955;
+  --md-sys-color-on-surface-variant:      #b7c9d6;
+
+  /* ── Surface containers ── */
+  --md-sys-color-surface-dim:             #0b1318;
+  --md-sys-color-surface-bright:          #313c43;
+  --md-sys-color-surface-container-lowest:#060d12;
+  --md-sys-color-surface-container-low:   #141d22;
+  --md-sys-color-surface-container:       #182127;
+  --md-sys-color-surface-container-high:  #222c31;
+  --md-sys-color-surface-container-highest:#2d373c;
+
+  /* ── Outline ── */
+  --md-sys-color-outline:                 #82939f;
+  --md-sys-color-outline-variant:         #374955;
+
+  /* ── Shadow / Scrim ── */
+  --md-sys-color-shadow:                  #000000;
+  --md-sys-color-scrim:                   #000000;
+
+  /* ── Inverse ── */
+  --md-sys-color-inverse-surface:         #dde4ea;
+  --md-sys-color-inverse-on-surface:      #2b3338;
+  --md-sys-color-inverse-primary:         #006589;
+
+  /* ── Custom accent helpers ── */
+  --color-hero-gradient-start:            #0d1b24;
+  --color-hero-gradient-end:              #0b1318;
+  --color-card-hover-tint:                rgba(80, 200, 255, 0.08);
+  --color-section-alt:                    #141d22;
+
+  /* ── Elevation overlays (MD3 tonal surface) ── */
+  --elevation-tint: rgba(80, 200, 255, 1);
+  --elevation-1: 0 1px 2px rgba(0,0,0,.35), 0 1px 3px 1px rgba(0,0,0,.25);
+  --elevation-2: 0 1px 2px rgba(0,0,0,.35), 0 2px 6px 2px rgba(0,0,0,.25);
+  --elevation-3: 0 4px 8px 3px rgba(0,0,0,.30), 0 1px 3px rgba(0,0,0,.35);
+}
+
+/* ================================================================
+   MD3 Component Token Overrides — Wire MD3 components to themes
+   ================================================================ */
+
+/* Buttons */
+:root, [data-theme] {
+  --md-filled-button-container-color:       var(--md-sys-color-primary);
+  --md-filled-button-label-text-color:      var(--md-sys-color-on-primary);
+  --md-outlined-button-outline-color:       var(--md-sys-color-outline);
+  --md-outlined-button-label-text-color:    var(--md-sys-color-primary);
+  --md-text-button-label-text-color:        var(--md-sys-color-primary);
+  --md-filled-tonal-button-container-color: var(--md-sys-color-secondary-container);
+  --md-filled-tonal-button-label-text-color:var(--md-sys-color-on-secondary-container);
+
+  /* Icon buttons */
+  --md-icon-button-icon-color:              var(--md-sys-color-on-surface-variant);
+  --md-icon-button-state-layer-color:       var(--md-sys-color-on-surface-variant);
+
+  /* Chips */
+  --md-assist-chip-outline-color:           var(--md-sys-color-outline);
+  --md-assist-chip-label-text-color:        var(--md-sys-color-on-surface-variant);
+  --md-filter-chip-selected-container-color:var(--md-sys-color-secondary-container);
+
+  /* Divider */
+  --md-divider-color:                       var(--md-sys-color-outline-variant);
+
+  /* Progress */
+  --md-linear-progress-track-color:         var(--md-sys-color-surface-variant);
+  --md-linear-progress-active-indicator-color: var(--md-sys-color-primary);
+
+  /* FAB */
+  --md-fab-container-color:                 var(--md-sys-color-primary-container);
+  --md-fab-icon-color:                      var(--md-sys-color-on-primary-container);
+
+  /* Ripple */
+  --md-ripple-hover-color:                  var(--md-sys-color-on-surface);
+  --md-ripple-pressed-color:                var(--md-sys-color-on-surface);
+}
+
+/* ── Theme transition ─────────────────────────────────────────── */
+html {
+  transition:
+    background-color var(--motion-duration-medium2) var(--motion-easing-standard),
+    color            var(--motion-duration-medium2) var(--motion-easing-standard);
+}
