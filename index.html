@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Portfolio — Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#070d1a;--bg2:#0b1428;--surface:#0f1e38;--surface2:#162540;
+  --primary:#4f9cff;--primary-dim:#2563c7;--accent:#7dd3fc;--accent2:#38bdf8;
+  --on-surf:#c8deff;--on-surf-dim:#6a8db8;--ripple:rgba(79,156,255,.25);
+  --radius:20px;--nav-h:64px;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--on-surf);min-height:100vh;overflow-x:hidden}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--nav-h);display:flex;align-items:center;padding:0 20px;gap:12px;
+  background:rgba(7,13,26,.75);backdrop-filter:blur(20px) saturate(160%);
+  border-bottom:1px solid rgba(79,156,255,.08);
+  transition:border-color .3s,background .3s;
+}
+nav.expanded{border-color:rgba(79,156,255,.2);background:rgba(7,13,26,.92)}
+.nav-logo{
+  font-family:'DM Serif Display',serif;font-size:1.25rem;
+  color:var(--accent);letter-spacing:.02em;margin-right:auto;
+  text-decoration:none;
+}
+#nav-toggle{
+  appearance:none;border:none;background:none;cursor:pointer;
+  width:44px;height:44px;border-radius:50%;
+  display:grid;place-items:center;position:relative;overflow:hidden;
+  color:var(--on-surf);transition:background .2s;
+}
+#nav-toggle:hover{background:rgba(79,156,255,.12)}
+#nav-toggle .material-symbols-rounded{font-size:26px;position:absolute;
+  transition:transform .35s var(--ease),opacity .25s}
+#nav-toggle .icon-close{opacity:0;transform:rotate(-90deg) scale(.5)}
+nav.expanded #nav-toggle .icon-menu{opacity:0;transform:rotate(90deg) scale(.5)}
+nav.expanded #nav-toggle .icon-close{opacity:1;transform:rotate(0) scale(1)}
+
+.nav-links{
+  display:flex;gap:6px;overflow:hidden;
+  max-width:0;opacity:0;
+  transition:max-width .45s var(--ease),opacity .3s;
+}
+nav.expanded .nav-links{max-width:380px;opacity:1}
+.nav-link{
+  text-decoration:none;font-size:.875rem;font-weight:500;
+  color:var(--on-surf-dim);padding:8px 18px;border-radius:50px;
+  position:relative;overflow:hidden;
+  transition:color .2s,background .2s;white-space:nowrap;
+}
+.nav-link:hover{color:var(--accent);background:rgba(79,156,255,.1)}
+.nav-link.active{color:var(--primary);background:rgba(79,156,255,.15)}
+.ripple-el{
+  position:absolute;border-radius:50%;background:var(--ripple);
+  transform:scale(0);animation:rippleAnim .55s linear;pointer-events:none;
+}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0}}
+
+/* HERO */
+main{padding-top:var(--nav-h)}
+.hero{
+  min-height:calc(100svh - var(--nav-h));
+  display:grid;place-items:center;padding:80px 24px;
+  position:relative;overflow:hidden;
+}
+.mesh{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 65% 55% at 18% 42%,rgba(37,99,199,.38) 0%,transparent 65%),
+    radial-gradient(ellipse 55% 65% at 82% 58%,rgba(56,189,248,.22) 0%,transparent 65%),
+    radial-gradient(ellipse 45% 45% at 52% 18%,rgba(79,156,255,.18) 0%,transparent 60%);
+  animation:meshDrift 14s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes meshDrift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.09) translate(-2%,1.5%)}}
+.dots{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(79,156,255,.18) 1px,transparent 1px);
+  background-size:36px 36px;
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,black 30%,transparent 80%);
+  animation:dotsPulse 7s ease-in-out infinite alternate;
+}
+@keyframes dotsPulse{from{opacity:.35}to{opacity:.85}}
+.hero-content{position:relative;text-align:center;max-width:720px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 18px;border-radius:50px;
+  background:rgba(79,156,255,.1);border:1px solid rgba(79,156,255,.28);
+  font-size:.78rem;font-weight:600;color:var(--accent2);
+  margin-bottom:30px;letter-spacing:.09em;text-transform:uppercase;
+  animation:fadeUp .7s .1s both;
+}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);animation:bdPulse 2s infinite}
+@keyframes bdPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2.8rem,8vw,5.5rem);line-height:1.06;color:#fff;
+  animation:fadeUp .7s .2s both;
+}
+.hero-title .grad{
+  background:linear-gradient(135deg,var(--accent2) 0%,var(--primary) 55%,#a78bfa 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;display:inline-block;
+}
+.hero-sub{
+  margin-top:20px;font-size:clamp(.95rem,2.4vw,1.18rem);
+  color:var(--on-surf-dim);font-weight:300;line-height:1.75;
+  animation:fadeUp .7s .32s both;
+}
+.hero-cta{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  margin-top:40px;animation:fadeUp .7s .46s both;
+}
+.btn{
+  position:relative;overflow:hidden;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:50px;
+  font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:600;
+  cursor:pointer;text-decoration:none;border:none;
+  transition:transform .2s,box-shadow .2s;
+}
+.btn:active{transform:scale(.96)!important}
+.btn-primary{
+  background:linear-gradient(135deg,var(--primary-dim),var(--primary));
+  color:#fff;box-shadow:0 4px 24px rgba(79,156,255,.35);
+}
+.btn-primary:hover{box-shadow:0 6px 36px rgba(79,156,255,.55);transform:translateY(-2px)}
+.btn-outline{
+  background:rgba(79,156,255,.1);border:1.5px solid rgba(79,156,255,.28);color:var(--accent);
+}
+.btn-outline:hover{background:rgba(79,156,255,.18);transform:translateY(-2px)}
+.btn .material-symbols-rounded{font-size:20px}
+
+/* STATS */
+.stats{
+  display:flex;justify-content:center;gap:48px;flex-wrap:wrap;
+  padding:0 24px 80px;
+}
+.stat{text-align:center}
+.stat-num{font-family:'DM Serif Display',serif;font-size:2.8rem;color:#fff}
+.stat-num span{color:var(--primary)}
+.stat-label{font-size:.78rem;color:var(--on-surf-dim);margin-top:4px;letter-spacing:.07em;text-transform:uppercase}
+
+/* SKILLS */
+.skills-section{padding:0 24px 80px;text-align:center}
+.section-label{font-size:.78rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--on-surf-dim);margin-bottom:36px}
+.chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:800px;margin:0 auto}
+.chip{
+  padding:10px 22px;border-radius:50px;
+  background:var(--surface);border:1px solid rgba(79,156,255,.14);
+  font-size:.875rem;font-weight:500;color:var(--on-surf);
+  position:relative;overflow:hidden;
+  transition:border-color .2s,background .2s,transform .2s;cursor:default;
+}
+.chip:hover{border-color:rgba(79,156,255,.45);background:var(--surface2);transform:translateY(-2px)}
+
+/* CARDS */
+.cards-section{padding:0 24px 100px}
+.cards-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;max-width:980px;margin:0 auto;
+}
+.card{
+  background:var(--surface);border:1px solid rgba(79,156,255,.1);
+  border-radius:var(--radius);padding:28px 26px;
+  position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+  cursor:default;
+}
+.card::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(135deg,rgba(79,156,255,.06) 0%,transparent 60%);
+  opacity:0;transition:opacity .3s;
+}
+.card:hover{border-color:rgba(79,156,255,.35);transform:translateY(-5px);box-shadow:0 20px 48px rgba(0,0,0,.45)}
+.card:hover::before{opacity:1}
+.card-icon{font-size:2.2rem;margin-bottom:14px}
+.card h3{font-size:1.05rem;font-weight:600;color:#fff;margin-bottom:8px}
+.card p{font-size:.875rem;color:var(--on-surf-dim);line-height:1.65}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+footer{
+  text-align:center;padding:24px;
+  font-size:.8rem;color:var(--on-surf-dim);
+  border-top:1px solid rgba(79,156,255,.08);
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">dev.portfolio</a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html"    class="nav-link active"   data-ripple>Home</a>
+    <a href="projects.html" class="nav-link"           data-ripple>Projects</a>
+    <a href="about.html"    class="nav-link"           data-ripple>About</a>
+  </div>
+  <button id="nav-toggle" aria-label="Toggle navigation" data-ripple>
+    <span class="material-symbols-rounded icon-menu">menu</span>
+    <span class="material-symbols-rounded icon-close">close</span>
+  </button>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="mesh" aria-hidden="true"></div>
+    <div class="dots" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><span class="badge-dot"></span>Available for work</div>
+      <h1 class="hero-title">Building things<br>that <span class="grad">matter</span></h1>
+      <p class="hero-sub">Full-stack developer &amp; open-source contributor.<br>I craft performant, accessible, and delightful digital experiences.</p>
+      <div class="hero-cta">
+        <a href="projects.html" class="btn btn-primary" data-ripple>
+          <span class="material-symbols-rounded">code_blocks</span>View Projects
+        </a>
+        <a href="about.html" class="btn btn-outline" data-ripple>
+          <span class="material-symbols-rounded">person</span>About Me
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat reveal"><div class="stat-num">42<span>+</span></div><div class="stat-label">Projects</div></div>
+    <div class="stat reveal"><div class="stat-num">3<span>k+</span></div><div class="stat-label">GitHub Stars</div></div>
+    <div class="stat reveal"><div class="stat-num">5<span>yrs</span></div><div class="stat-label">Experience</div></div>
+    <div class="stat reveal"><div class="stat-num">12<span>+</span></div><div class="stat-label">Open Source</div></div>
+  </div>
+
+  <section class="skills-section">
+    <p class="section-label">Technologies I work with</p>
+    <div class="chips">
+      <span class="chip reveal" data-ripple>TypeScript</span>
+      <span class="chip reveal" data-ripple>React</span>
+      <span class="chip reveal" data-ripple>Next.js</span>
+      <span class="chip reveal" data-ripple>Node.js</span>
+      <span class="chip reveal" data-ripple>Python</span>
+      <span class="chip reveal" data-ripple>Rust</span>
+      <span class="chip reveal" data-ripple>PostgreSQL</span>
+      <span class="chip reveal" data-ripple>Docker</span>
+      <span class="chip reveal" data-ripple>Kubernetes</span>
+      <span class="chip reveal" data-ripple>GraphQL</span>
+      <span class="chip reveal" data-ripple>WebGL</span>
+      <span class="chip reveal" data-ripple>WASM</span>
+    </div>
+  </section>
+
+  <section class="cards-section">
+    <div class="cards-grid">
+      <div class="card reveal">
+        <div class="card-icon">⚡</div>
+        <h3>Performance First</h3>
+        <p>Every millisecond counts. I obsess over bundle size, paint times, and runtime efficiency.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🎨</div>
+        <h3>Design Systems</h3>
+        <p>Cohesive, accessible component libraries that scale across teams and products.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🔐</div>
+        <h3>Security Minded</h3>
+        <p>Security is never an afterthought — from auth flows to dependency audits.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🌐</div>
+        <h3>Open Source</h3>
+        <p>Giving back to the ecosystem that made me. Active contributor across multiple orgs.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>&copy; 2025 dev.portfolio — Built with love &amp; obsessive attention to detail</footer>
+
+<script>
+const navbar=document.getElementById('navbar');
+const toggle=document.getElementById('nav-toggle');
+toggle.addEventListener('click',()=>navbar.classList.toggle('expanded'));
+document.addEventListener('click',e=>{if(!navbar.contains(e.target))navbar.classList.remove('expanded')});
+
+function ripple(e,el){
+  const r=el.getBoundingClientRect(),d=Math.max(r.width,r.height)*2;
+  const s=document.createElement('span');s.className='ripple-el';
+  Object.assign(s.style,{width:d+'px',height:d+'px',
+    left:(e.clientX-r.left-d/2)+'px',top:(e.clientY-r.top-d/2)+'px'});
+  el.appendChild(s);s.addEventListener('animationend',()=>s.remove());
+}
+document.querySelectorAll('[data-ripple]').forEach(el=>{
+  el.style.position=el.style.position||'relative';
+  el.style.overflow='hidden';
+  el.addEventListener('pointerdown',e=>ripple(e,el));
+});
+
+const io=new IntersectionObserver(entries=>{
+  entries.forEach((en,i)=>{
+    if(en.isIntersecting){
+      setTimeout(()=>en.target.classList.add('in'),i*60);
+      io.unobserve(en.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

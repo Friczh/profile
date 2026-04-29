@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Portfolio — Projects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#070d1a;--bg2:#0b1428;--surface:#0f1e38;--surface2:#162540;
+  --primary:#4f9cff;--primary-dim:#2563c7;--accent:#7dd3fc;--accent2:#38bdf8;
+  --on-surf:#c8deff;--on-surf-dim:#6a8db8;--ripple:rgba(79,156,255,.25);
+  --radius:20px;--nav-h:64px;--ease:cubic-bezier(.25,.46,.45,.94);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--on-surf);min-height:100vh;overflow-x:hidden}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--nav-h);display:flex;align-items:center;padding:0 20px;gap:12px;
+  background:rgba(7,13,26,.75);backdrop-filter:blur(20px) saturate(160%);
+  border-bottom:1px solid rgba(79,156,255,.08);transition:border-color .3s,background .3s;
+}
+nav.expanded{border-color:rgba(79,156,255,.2);background:rgba(7,13,26,.92)}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:1.25rem;color:var(--accent);letter-spacing:.02em;margin-right:auto;text-decoration:none}
+#nav-toggle{
+  appearance:none;border:none;background:none;cursor:pointer;
+  width:44px;height:44px;border-radius:50%;
+  display:grid;place-items:center;position:relative;overflow:hidden;
+  color:var(--on-surf);transition:background .2s;
+}
+#nav-toggle:hover{background:rgba(79,156,255,.12)}
+#nav-toggle .material-symbols-rounded{font-size:26px;position:absolute;transition:transform .35s var(--ease),opacity .25s}
+#nav-toggle .icon-close{opacity:0;transform:rotate(-90deg) scale(.5)}
+nav.expanded #nav-toggle .icon-menu{opacity:0;transform:rotate(90deg) scale(.5)}
+nav.expanded #nav-toggle .icon-close{opacity:1;transform:rotate(0) scale(1)}
+.nav-links{display:flex;gap:6px;overflow:hidden;max-width:0;opacity:0;transition:max-width .45s var(--ease),opacity .3s}
+nav.expanded .nav-links{max-width:380px;opacity:1}
+.nav-link{
+  text-decoration:none;font-size:.875rem;font-weight:500;
+  color:var(--on-surf-dim);padding:8px 18px;border-radius:50px;
+  position:relative;overflow:hidden;transition:color .2s,background .2s;white-space:nowrap;
+}
+.nav-link:hover{color:var(--accent);background:rgba(79,156,255,.1)}
+.nav-link.active{color:var(--primary);background:rgba(79,156,255,.15)}
+.ripple-el{position:absolute;border-radius:50%;background:var(--ripple);transform:scale(0);animation:rippleAnim .55s linear;pointer-events:none}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0}}
+
+/* PAGE */
+main{padding-top:calc(var(--nav-h) + 60px);padding-bottom:100px}
+
+.page-header{
+  text-align:center;padding:0 24px 64px;
+  animation:fadeUp .7s .05s both;
+}
+.page-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent2);margin-bottom:18px;
+}
+.eyebrow-line{width:32px;height:1.5px;background:var(--accent2);border-radius:2px}
+.page-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2.2rem,6vw,4rem);color:#fff;line-height:1.1;
+  margin-bottom:16px;
+}
+.page-sub{font-size:1rem;color:var(--on-surf-dim);font-weight:300;line-height:1.7}
+
+/* FILTER CHIPS */
+.filter-bar{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  padding:0 24px 48px;
+  animation:fadeUp .7s .15s both;
+}
+.filter-chip{
+  appearance:none;border:1.5px solid rgba(79,156,255,.2);background:transparent;
+  color:var(--on-surf-dim);font-family:'Outfit',sans-serif;font-size:.84rem;font-weight:500;
+  padding:8px 20px;border-radius:50px;cursor:pointer;
+  position:relative;overflow:hidden;
+  transition:border-color .2s,color .2s,background .2s,transform .2s;
+}
+.filter-chip:hover{border-color:rgba(79,156,255,.45);color:var(--accent);transform:translateY(-1px)}
+.filter-chip.active{border-color:var(--primary);background:rgba(79,156,255,.15);color:var(--primary)}
+
+/* PROJECTS GRID */
+.projects-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:24px;max-width:1080px;margin:0 auto;padding:0 24px;
+}
+
+.proj-card{
+  background:var(--surface);border:1px solid rgba(79,156,255,.1);
+  border-radius:var(--radius);overflow:hidden;
+  position:relative;
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+  display:flex;flex-direction:column;
+  opacity:0;transform:translateY(28px);
+  transition:opacity .5s var(--ease),transform .5s var(--ease),
+    border-color .3s,box-shadow .3s;
+}
+.proj-card.in{opacity:1;transform:translateY(0)}
+.proj-card:hover{border-color:rgba(79,156,255,.4);transform:translateY(-6px);box-shadow:0 24px 56px rgba(0,0,0,.5)}
+
+.proj-banner{
+  height:160px;display:flex;align-items:center;justify-content:center;
+  font-size:3.5rem;position:relative;overflow:hidden;
+}
+.proj-banner::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 40%,var(--surface) 100%);
+}
+
+.proj-body{padding:22px 22px 20px;flex:1;display:flex;flex-direction:column;gap:10px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px}
+.proj-tag{
+  font-size:.72rem;font-weight:600;padding:4px 11px;border-radius:50px;
+  background:rgba(79,156,255,.12);color:var(--accent2);letter-spacing:.05em;
+}
+.proj-name{font-size:1.1rem;font-weight:700;color:#fff;line-height:1.3}
+.proj-desc{font-size:.85rem;color:var(--on-surf-dim);line-height:1.65;flex:1}
+.proj-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:14px;border-top:1px solid rgba(79,156,255,.1);margin-top:6px;
+}
+.proj-stars{display:flex;align-items:center;gap:5px;font-size:.82rem;color:var(--on-surf-dim)}
+.proj-stars .material-symbols-rounded{font-size:16px;color:#f59e0b}
+.proj-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.82rem;font-weight:600;color:var(--primary);text-decoration:none;
+  padding:6px 14px;border-radius:50px;
+  background:rgba(79,156,255,.1);border:1px solid rgba(79,156,255,.2);
+  position:relative;overflow:hidden;
+  transition:background .2s,border-color .2s;
+}
+.proj-link:hover{background:rgba(79,156,255,.2);border-color:var(--primary)}
+.proj-link .material-symbols-rounded{font-size:16px}
+
+/* FEATURED */
+.featured-card{
+  grid-column:1/-1;
+  display:grid;grid-template-columns:1fr 1fr;
+  border-radius:var(--radius);
+  overflow:hidden;background:var(--surface);
+  border:1px solid rgba(79,156,255,.18);
+  opacity:0;transform:translateY(28px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .3s,box-shadow .3s;
+}
+.featured-card.in{opacity:1;transform:translateY(0)}
+.featured-card:hover{border-color:rgba(79,156,255,.45);box-shadow:0 28px 64px rgba(0,0,0,.55)}
+@media(max-width:640px){.featured-card{grid-template-columns:1fr}}
+.featured-banner{
+  min-height:220px;display:flex;align-items:center;justify-content:center;
+  font-size:5rem;position:relative;overflow:hidden;
+}
+.featured-banner::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent 60%,var(--surface) 100%);
+}
+@media(max-width:640px){.featured-banner::after{background:linear-gradient(to bottom,transparent 50%,var(--surface) 100%)}}
+.featured-body{
+  padding:32px 28px;display:flex;flex-direction:column;gap:12px;justify-content:center;
+}
+.featured-label{
+  font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent2);
+}
+.featured-name{font-family:'DM Serif Display',serif;font-size:1.7rem;color:#fff;line-height:1.2}
+.featured-desc{font-size:.9rem;color:var(--on-surf-dim);line-height:1.7}
+.featured-footer{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+footer{
+  text-align:center;padding:24px;font-size:.8rem;color:var(--on-surf-dim);
+  border-top:1px solid rgba(79,156,255,.08);
+}
+
+/* Loading shimmer placeholder */
+.shimmer{
+  background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s infinite;
+  border-radius:8px;
+}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">dev.portfolio</a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html"    class="nav-link"          data-ripple>Home</a>
+    <a href="projects.html" class="nav-link active"   data-ripple>Projects</a>
+    <a href="about.html"    class="nav-link"          data-ripple>About</a>
+  </div>
+  <button id="nav-toggle" aria-label="Toggle navigation" data-ripple>
+    <span class="material-symbols-rounded icon-menu">menu</span>
+    <span class="material-symbols-rounded icon-close">close</span>
+  </button>
+</nav>
+
+<main>
+  <div class="page-header">
+    <div class="page-eyebrow"><span class="eyebrow-line"></span>Work<span class="eyebrow-line"></span></div>
+    <h1 class="page-title">Selected Projects</h1>
+    <p class="page-sub">A curated collection of things I've built, shipped, and open-sourced.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-chip active" data-filter="all" data-ripple>All</button>
+    <button class="filter-chip" data-filter="fullstack" data-ripple>Full Stack</button>
+    <button class="filter-chip" data-filter="systems" data-ripple>Systems</button>
+    <button class="filter-chip" data-filter="frontend" data-ripple>Frontend</button>
+    <button class="filter-chip" data-filter="oss" data-ripple>Open Source</button>
+  </div>
+
+  <div class="projects-grid" id="projectsGrid">
+
+    <!-- Featured -->
+    <div class="featured-card" data-tags="fullstack oss">
+      <div class="featured-banner" style="background:linear-gradient(135deg,#0b2040 0%,#0d2f5a 100%)">🚀</div>
+      <div class="featured-body">
+        <span class="featured-label">⭐ Featured Project</span>
+        <h2 class="featured-name">NovaDeploy</h2>
+        <p class="featured-desc">A zero-config deployment platform for Node.js microservices. Handles CI/CD, secret management, rolling updates, and observability out of the box — deployed to 500+ teams worldwide.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">TypeScript</span>
+          <span class="proj-tag">Kubernetes</span>
+          <span class="proj-tag">Helm</span>
+          <span class="proj-tag">Prometheus</span>
+        </div>
+        <div class="featured-footer">
+          <a href="#" class="proj-link" data-ripple><span class="material-symbols-rounded">code</span>GitHub</a>
+          <a href="#" class="proj-link" data-ripple><span class="material-symbols-rounded">open_in_new</span>Live Demo</a>
+          <span class="proj-stars"><span class="material-symbols-rounded">star</span>2.1k</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="proj-card" data-tags="frontend">
+      <div class="proj-banner" style="background:linear-gradient(135deg,#0c1f3a,#0f2d4f)">🎨</div>
+      <div class="proj-body">
+        <div class="proj-tags"><span class="proj-tag">React</span><span class="proj-tag">WebGL</span></div>
+        <div class="proj-name">Lumina UI</div>
+        <p class="proj-desc">A GPU-accelerated component library with physics-based animations. Zero-runtime CSS-in-JS with full TypeScript support.</p>
+        <div class="proj-footer">
+          <span class="proj-stars"><span class="material-symbols-rounded">star</span>640</span>
+          <a href="#" class="proj-link" data-ripple><span class="material-symbols-rounded">open_in_new</span>View</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card" data-tags="systems">
+      <div class="proj-banner" style="background:linear-gradient(135deg,#081928,#0b2436)">🦀</div>
+      <div class="proj-body">
+        <div class="proj-tags"><span class="proj-tag">Rust</span><span class="proj-tag">WASM</span></div>
+        <div class="proj-name">Blaze DB</div>
+        <p class="proj-desc">An embedded key-value store written in Rust, compiled to WASM for browser-native use. 4× faster than IndexedDB in benchmarks.</p>
+        <div class="proj-footer">
+          <span class="proj-stars"><span class="material-symbols-rounded">star</span>410</span>
+          <a href="#" class="proj-link" data-ripple><span class="material-symbols-rounded">open_in_new</span>View</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card" data-tags="fullstack">
+      <div class="proj-banner" style="background:linear-gradient(135deg,#0e2035,#0f2a44)">📊</div>
+      <div class="proj-body">
+        <div class="proj-tags"><span class="proj-tag">Next.js</span><span class="proj-tag">GraphQL</span><span class="proj-tag">Postgres</span></div>
+        <div class="proj-name">Metrics Atlas</div>
+        <p class="proj-desc">Real-time analytics dashboard with custom chart engine. Streams 10k events/sec with sub-50ms p99 latency.</p>
+        <div class="proj-footer">
+          <span class="proj-stars"><span class="material-symbols-rounded">star</span>305</span>
+          <a href="#" class="proj-link" data-ripple><span class="material-symbols-rounded">open_in_new</span>View</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card" data-tags="oss">
+      <div class="proj-banner" style="background:linear-gradient(135deg,#0a1d32,#0d2540)">📦</div>
+      <div class="proj-body">
+        <div class="proj-tags"><span class="proj-tag">Node.js</span><span class="proj-tag">CLI</span></div>
+        <div class="proj-name">PackStar</div>
+        <p class="proj-desc">A smarter monorepo toolchain. Dependency graph analysis, incremental builds, and workspace-aware cache invalidation.</p>
+        <div class="proj-footer">
+          <span class="proj-stars"><span class="material-symbols-rounded">star</span>870</span>
+          <a href="#" class="proj-link" data-ripple><span class="material-symbols-rounded">open_in_new</span>View</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card" data-tags="systems oss">
+      <div class="proj-banner" style="background:linear-gradient(135deg,#081525,#0a1c30)">⚙️</div>
+      <div class="proj-body">
+        <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">C++</span></div>
+        <div class="proj-name">QuickLang</div>
+        <p class="proj-desc">A toy compiled language with LLVM backend. Supports generics, pattern matching, and zero-cost abstractions.</p>
+        <div class="proj-footer">
+          <span class="proj-stars"><span class="material-symbols-rounded">star</span>192</span>
+          <a href="#" class="proj-link" data-ripple><span class="material-symbols-rounded">open_in_new</span>View</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card" data-tags="frontend fullstack">
+      <div class="proj-banner" style="background:linear-gradient(135deg,#0d1f38,#112840)">🌊</div>
+      <div class="proj-body">
+        <div class="proj-tags"><span class="proj-tag">Three.js</span><span class="proj-tag">GLSL</span></div>
+        <div class="proj-name">OceanSim</div>
+        <p class="proj-desc">Real-time ocean simulation with FFT-based wave generation, PBR materials, and atmospheric scattering.</p>
+        <div class="proj-footer">
+          <span class="proj-stars"><span class="material-symbols-rounded">star</span>228</span>
+          <a href="#" class="proj-link" data-ripple><span class="material-symbols-rounded">open_in_new</span>View</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>&copy; 2025 dev.portfolio — Built with love &amp; obsessive attention to detail</footer>
+
+<script>
+const navbar=document.getElementById('navbar');
+const toggle=document.getElementById('nav-toggle');
+toggle.addEventListener('click',()=>navbar.classList.toggle('expanded'));
+document.addEventListener('click',e=>{if(!navbar.contains(e.target))navbar.classList.remove('expanded')});
+
+function ripple(e,el){
+  const r=el.getBoundingClientRect(),d=Math.max(r.width,r.height)*2;
+  const s=document.createElement('span');s.className='ripple-el';
+  Object.assign(s.style,{width:d+'px',height:d+'px',
+    left:(e.clientX-r.left-d/2)+'px',top:(e.clientY-r.top-d/2)+'px'});
+  el.appendChild(s);s.addEventListener('animationend',()=>s.remove());
+}
+document.querySelectorAll('[data-ripple]').forEach(el=>{
+  el.style.position=el.style.position||'relative';
+  el.style.overflow='hidden';
+  el.addEventListener('pointerdown',e=>ripple(e,el));
+});
+
+// Filter
+const chips=document.querySelectorAll('.filter-chip');
+chips.forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    chips.forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    const f=chip.dataset.filter;
+    document.querySelectorAll('.proj-card,.featured-card').forEach(card=>{
+      const tags=(card.dataset.tags||'').split(' ');
+      const show=f==='all'||tags.includes(f);
+      card.style.display=show?'':'none';
+    });
+  });
+});
+
+// Intersection reveal
+const io=new IntersectionObserver(entries=>{
+  entries.forEach((en,i)=>{
+    if(en.isIntersecting){
+      setTimeout(()=>en.target.classList.add('in'),i*80);
+      io.unobserve(en.target);
+    }
+  });
+},{threshold:.08});
+document.querySelectorAll('.proj-card,.featured-card').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
